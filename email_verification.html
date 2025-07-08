@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Lato", sans-serif;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        margin: 0 auto;
+        height: 100%;
+        width: 90%;
+        max-width: 430px;
+        background-color: #fff;
+      }
+
+      header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 0.2rem 0;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .back-icon {
+        font-size: 1rem;
+        cursor: pointer;
+        color: #000;
+        cursor: pointer;
+        margin-left: 7px;
+      }
+
+      h2 {
+        font-size: 0.9rem;
+      }
+
+      .otp-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding: 1.5rem 0.7rem;
+        margin-bottom: 10px;
+      }
+
+      .otp-input {
+        width: 50px;
+        height: 45px;
+        font-size: 24px;
+        text-align: center;
+        border: 1px solid transparent;
+        background: rgb(248, 249, 249);
+        outline: none;
+        border-radius: 10px;
+      }
+
+      .resend {
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      .btn-container {
+        width: 90%;
+        max-width: 430px;
+        position: fixed;
+        left: auto;
+        right: auto;
+        bottom: 15px;
+      }
+
+      .verifyBtn {
+        width: 100%;
+        padding: 1.1rem;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        font-family: "Lato", sans-serif;
+        font-size: 18px;
+        cursor: pointer;
+      }
+
+      /* Tablet screens and up (min-width: 600px) */
+      @media (min-width: 600px) {
+        .container,
+        .btn-container {
+          max-width: 500px;
+        }
+
+        h2 {
+          font-size: 1.1rem;
+        }
+
+        .otp-input {
+          width: 60px;
+          height: 55px;
+          font-size: 26px;
+        }
+
+        .verifyBtn {
+          font-size: 18px;
+        }
+      }
+
+      /* Desktop screens and up (min-width: 1024px) */
+      @media (min-width: 1024px) {
+        .container,
+        .btn-container {
+          max-width: 550px;
+        }
+
+        h2 {
+          font-size: 1.3rem;
+        }
+
+        .otp-input {
+          width: 65px;
+          height: 650 28px;
+        }
+
+        .verifyBtn {
+          font-size: 20px;
+          padding: 1.2rem;
+        }
+
+        .resend {
+          font-size: 16px;
+        }
+      }
+    </style>
+    <title>Email Verification</title>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <span class="material-symbols-outlined back-icon" tabindex="0"
+          >arrow_back_ios</span
+        >
+        <h2>Email Verification</h2>
+      </header>
+
+      <form>
+        <div class="otp-container">
+          <input type="tel" class="otp-input" maxlength="1" id="otp1" />
+          <input type="tel" class="otp-input" maxlength="1" id="otp2" />
+          <input type="tel" class="otp-input" maxlength="1" id="otp3" />
+          <input type="tel" class="otp-input" maxlength="1" id="otp4" />
+        </div>
+        <div class="resend">Send OTP code again</div>
+
+        <div class="btn-container">
+          <button type="submit" class="verifyBtn" id="verifyBtn" disabled>
+            Verify
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      const inputs = document.querySelectorAll(".otp-input");
+      const verifyBtn = document.getElementById("verifyBtn");
+
+      function checkOTPCompletion() {
+        let filled = true;
+        inputs.forEach((input) => {
+          if (input.value === "") {
+            filled = false;
+          }
+        });
+
+        if (filled) {
+          verifyBtn.disabled = false;
+          verifyBtn.style.backgroundColor = "rgb(26, 102, 201)";
+          verifyBtn.style.color = "#fff";
+        } else {
+          verifyBtn.disabled = true;
+          verifyBtn.style.backgroundColor = "rgb(230, 230, 230)";
+          verifyBtn.style.color = "#555";
+        }
+      }
+
+      inputs.forEach((input, index) => {
+        input.addEventListener("input", () => {
+          if (input.value.length === 1 && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+          }
+          checkOTPCompletion();
+        });
+
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Backspace" && input.value === "" && index > 0) {
+            inputs[index - 1].focus();
+          }
+          setTimeout(checkOTPCompletion(), 0);
+        });
+      });
+      window.addEventListener("DOMContentLoaded", checkOTPCompletion);
+    </script>
+  </body>
+</html>
